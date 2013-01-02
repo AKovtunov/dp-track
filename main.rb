@@ -13,7 +13,6 @@ def get_info
   req = Mechanize.new.get 'http://transit.in.ua/importTransport.php?dataRequest%5B%5D=dnepropetrovsk-taxi-20&dataRequest%5B%5D=dnepropetrovsk-taxi-33&dataRequest%5B%5D=dnepropetrovsk-taxi-127'
   settings.cache.set('data', req.body)
 
-
 end
 
 get '/' do
@@ -27,7 +26,7 @@ get '/' do
 
   (JSON.load settings.cache.get('data')).each do |one_way|
 
-    data = data + one_way['info'] + '<br>'
+    data = data + one_way['info'] + one_way['cordinate'].to_s + '<br>'
 
   end
 
