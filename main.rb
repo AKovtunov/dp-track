@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'dalli'
+require 'memcachier'
 
 set :cache, Dalli::Client.new
 
