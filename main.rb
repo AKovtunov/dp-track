@@ -24,7 +24,8 @@ get '/' do
 
   Geocoder.configure(
 
-    :lookup => :yandex,
+    :api_key => 'AIzaSyAj92jkzuo0TVm_gCNz7dto3WwEt5j3wbo',
+    :lookup => :google,
     :language => :ru,
     :timeout => 5,
     :units => :m
@@ -39,7 +40,10 @@ get '/' do
 
     place_geo = Geocoder.search((one_way['cordinate'].to_s)[1..-2])
 
-    place = place_geo.first.data['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
+    # for yandex
+    #place = place_geo.first.data['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
+
+    place = place_geo.first.data['address_components'][1]['short_name'] + ', ' + place_geo.first.data['address_components'][0]['short_name']
 
     data = data + one_way['info'] + '<br>' + place + '<br><br>'
 
