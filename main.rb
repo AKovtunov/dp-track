@@ -5,7 +5,20 @@ require 'dalli'
 
 set :cache, Dalli::Client.new
 
+def get_info
+
+  require 'mechanize'
+
+  req = Mechanize.new.get 'http://transit.in.ua/importTransport.php?dataRequest%5B%5D=dnepropetrovsk-taxi-20&dataRequest%5B%5D=dnepropetrovsk-taxi-33&dataRequest%5B%5D=dnepropetrovsk-taxi-127'
+  settings.cache.set('data', req.body)
+
+
+end
+
 get '/' do
+
+  # remove later
+  get_info
   
   require 'json'
 
@@ -23,10 +36,7 @@ end
 
 get '/fetch' do
 
-  require 'mechanize'
-
-  req = Mechanize.new.get 'http://transit.in.ua/importTransport.php?dataRequest%5B%5D=dnepropetrovsk-taxi-20&dataRequest%5B%5D=dnepropetrovsk-taxi-33&dataRequest%5B%5D=dnepropetrovsk-taxi-127'
-  settings.cache.set('data', req.body)
+  get_info
 
 end
 
