@@ -6,6 +6,7 @@ gem 'mechanize'
 gem 'dalli'
 gem 'json'
 gem 'memcachier'
+gem 'geocoder'
 
 group :development do
   gem 'shotgun'

@@ -20,13 +20,28 @@ get '/' do
   # remove later
   get_info
   
-  require 'json'
+  require 'geocoder'
+
+  Geocoder.configure(
+
+    :lookup => :yandex,
+    :language => :ru,
+    :timeout => 5,
+    :units => :m
+
+  )
 
   data = ''
 
+  require 'json'
+
   (JSON.load settings.cache.get('data')).each do |one_way|
 
-    data = data + one_way['info'] + one_way['cordinate'].to_s + '<br>'
+    place_geo = Geocoder.search((one_way['cordinate'].to_s)[1..-2])
+
+    place = place_geo.first.data['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
+
+    data = data + one_way['info'] + '<br>' + place + '<br><br>'
 
   end
 
