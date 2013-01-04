@@ -14,14 +14,24 @@ require 'mechanize'
 Geocoder.configure(:lookup => :yandex, :language => :ru)
 
 # getting current information
-def get_info
+def get_info  (ways)
 
-  req = Mechanize.new.get 'http://transit.in.ua/importTransport.php?dataRequest%5B%5D=dnepropetrovsk-taxi-20&dataRequest%5B%5D=dnepropetrovsk-taxi-33&dataRequest%5B%5D=dnepropetrovsk-taxi-127'
+  url = 'http://transit.in.ua/importTransport.php?'
 
+  # create url for fetching ways
+  ways.each do |way|
+    url = url + 'dataRequest%5B%5D=dnepropetrovsk-taxi-'+way.to_s+'&'
+  end
+
+  # here will be saved parsed data
   data = []
 
+  # fetch data from web
+  req = Mechanize.new.get url
+
+
   Geocoder.configure(:lookup => :yandex, :language => :ru)
-  
+
   (JSON.load req.body).each do |raw_way|
 
     place = Geocoder.search((raw_way['cordinate'].to_s)[1..-2]).first.data['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
@@ -42,7 +52,7 @@ end
 
 get '/' do
 
-  get_info.to_json
+  get_info([127, 33, 20]).to_json
 
 end
 
