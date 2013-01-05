@@ -1,14 +1,14 @@
 # coding: UTF-8
 
 require 'sinatra'
-#require 'dalli'
-#require 'memcachier'
+require 'dalli'
+require 'memcachier'
 require 'json'
 require 'geocoder'
 require 'mechanize'
 
 # prepare memcache client
-#set :cache, Dalli::Client.new
+set :cache, Dalli::Client.new
 
 # prepare geocoder
 Geocoder.configure(:lookup => :yandex, :language => :ru)
@@ -29,7 +29,6 @@ def get_info  (ways)
   # fetch data from web
   req = Mechanize.new.get url
 
-
   Geocoder.configure(:lookup => :yandex, :language => :ru)
 
   (JSON.load req.body).each do |raw_way|
@@ -43,16 +42,22 @@ def get_info  (ways)
 
   end
 
-  #settings.cache.set('data', data)
+  settings.cache.set('data', data)
 
   data
 
 end
 
+# fetch info
+get '/fetch' do
+
+  get_info([127, 33, 20]).to_json
+
+end
 
 get '/' do
 
-  get_info([127, 33, 20]).to_json
+  settings.cache.get('data').to_json
 
 end
 
