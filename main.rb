@@ -42,19 +42,30 @@ def get_info  (ways)
 
   end
 
-  settings.cache.set('data', data)
+  #settings.cache.set('data', data)
 
   data
 
 end
 
+def test
+  url = 'http://transit.in.ua/importTransport.php?'
+  url = url + 'dataRequest%5B%5D=dnepropetrovsk-taxi-'+127.to_s+'&'
+  req = Mechanize.new.get url
+  Geocoder.configure(:lookup => :yandex, :language => :ru)
+  JSON.load req.body
+end
 # fetch info
 get '/fetch' do
 
   get_info([127, 33, 20]).to_json
 
 end
+get '/test' do
 
+  test.to_json
+
+end
 get '/' do
 
   settings.cache.get('data').to_json
