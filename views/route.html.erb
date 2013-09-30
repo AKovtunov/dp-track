@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Маршрут № <%=number%></title>
+  </head>
+  <body>
+    <% if !get_data_from(number).nil? %>
+      <% get_data_from(number).each do |data|%>
+        <%= data["info"].inspect %>
+        <%= data["cordinate"].inspect %>
+        <%= info_about data["cordinate"] %>
+        <br/>
+      <% end %>
+    <% else %>
+      NO DATA
+    <% end %>
+    <a href='/route/45', remote = true>LINK</a>
+  </body>
+</html>

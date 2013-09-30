@@ -1,0 +1,94 @@
+#require 'dalli'
+#require 'memcachier'
+require 'json'
+require 'geocoder'
+require 'mechanize'
+
+Geocoder.configure(:lookup => :google, :language => :ru)
+
+def get_data_from route_number
+  url = 'http://transit.in.ua/importTransport.php?'
+  url = url + 'dataRequest%5B%5D=dnepropetrovsk-taxi-'+route_number.to_s+'&'
+  req = Mechanize.new.get url
+  @data_array = JSON.load req.body
+  # Geocoder.configure(:lookup => :google, :language => :ru)
+  # (@raw_data_stirng).each do |raw_way|
+
+  #   place = Geocoder.search((raw_way['cordinate'].to_s)[1..-2]).first.data['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
+
+  #   # formating place
+  #   place = place.split(',')
+
+  #   @data_string << ({:info => raw_way['info'], :place => place})
+
+  # end
+  # @data_string
+end
+
+def info_about coords 
+  s = Geocoder.search("#{coords[0]},#{coords[1]}")
+  # #<Geocoder::Result::Google:0xa68612c 
+  # @data={"address_components"=>[
+  #     {"long_name"=>"145", "short_name"=>"145", "types"=>["street_number"]}, 
+  #     {"long_name"=>"проспект Кирова", "short_name"=>"проспект Кирова", "types"=>["route"]}, 
+  #     {"long_name"=>"Кировский район", "short_name"=>"Кировский район", "types"=>["sublocality", "political"]}, 
+  #     {"long_name"=>"Днепропетровск", "short_name"=>"Днепропетровск", "types"=>["locality", "political"]}, 
+  #     {"long_name"=>"Днепропетровський горсовет", "short_name"=>"Днепропетровський горсовет", 
+  #       "types"=>["administrative_area_level_3", "political"]}, 
+  #     {"long_name"=>"Днепропетровская область", "short_name"=>"Днепропетровская область", 
+  #       "types"=>["administrative_area_level_1", "political"]}, 
+  #     {"long_name"=>"Украина", "short_name"=>"UA", 
+  #       "types"=>["country", "political"]}
+  #     ], 
+  #     "formatted_address"=>"проспект Кирова, 145, Днепропетровск, Днепропетровская область, Украина", 
+  #     "geometry"=>{"location"=>{"lat"=>48.430843, "lng"=>35.01148}, 
+  #     "location_type"=>"ROOFTOP", 
+  #     "viewport"=>{"northeast"=>{"lat"=>48.43219198029149, "lng"=>35.01282898029149}, 
+  #     "southwest"=>{"lat"=>48.4294940197085, "lng"=>35.0101310197085}}}, "types"=>["street_address"]}, @cache_hit=nil>
+#127.0.0.1 - - [30/Sep/2013 20:23:31] "GET /route/113 HTTP/1.1" 200 1774 3.6472
+
+end
+
+def make_view route_number
+  data = get_data_from route_number
+end
+
+#prepare memcache client
+#set :cache, Dalli::Client.new
+
+# prepare geocoder
+#Geocoder.configure(:lookup => :google, :language => :ru)
+# getting current information
+# def get_info  (ways)
+
+#   url = 'http://transit.in.ua/importTransport.php?'
+
+#   # create url for fetching ways
+#   ways.each do |way|
+#     url = url + 'dataRequest%5B%5D=dnepropetrovsk-taxi-'+way.to_s+'&'
+#   end
+
+#   # here will be saved parsed data
+#   data = []
+
+#   # fetch data from web
+#   req = Mechanize.new.get url
+
+#   Geocoder.configure(:lookup => :yandex, :language => :ru)
+
+#   (JSON.load req.body).each do |raw_way|
+
+#     place = Geocoder.search((raw_way['cordinate'].to_s)[1..-2]).first.data['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
+
+#     # formating place
+#     place = place.split(',')[4..-1].join(',')
+
+#     data << ({:info => raw_way['info'], :place => place})
+
+#   end
+
+#   #settings.cache.set('data', data)
+
+#   data
+
+# end
