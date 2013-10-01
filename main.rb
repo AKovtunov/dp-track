@@ -13,7 +13,7 @@ get '/' do
   herb :index
 end
 
-get '/route/:number', :provides => [:html, :json, :js] do
-  herb :route, :locals => { :number => params[:number] }#, :layout => :post
+get '/route/:number', :provides => [:html, :json] do
+  herb :route, :locals => { :number => params[:number] }, :layout => (request.xhr? ? false : :frame)
 end
 
