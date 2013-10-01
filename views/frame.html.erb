@@ -4,6 +4,14 @@
     <title>Маршрут № <%=number%></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   </head>
-<body>
-</body>
+  <body>
+
+  </body>
+  <script>
+    $(getUpdate);
+    function getUpdate(){
+      <%= "$(\"body\").load(\"\/route\/#{number.to_s}\");" %>
+      setTimeout(getUpdate,1000);
+    }
+  </script>
 </html>

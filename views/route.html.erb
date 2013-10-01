@@ -1,17 +1,11 @@
-  <% if !get_data_from(number).nil? %>
-    <% get_data_from(number).each do |data|%>
-      <%= data["info"].inspect %>
-      <%= data["cordinate"].inspect %>
-      <%= info_about data["cordinate"] %>
-      <br/>
-    <% end %>
-  <% else %>
-    NO DATA
+<% if !get_data_from(number).nil? %>
+  <% get_data_from(number).each do |data|%>
+    <%= data["info"].inspect %>
+    <%= data["cordinate"].inspect %>
+    <%= info_about data["cordinate"] %>
+    <br/>
   <% end %>
-<script>
-  $(getUpdate);
-  function getUpdate(){
-    $("body").load("/route/113");
-    setTimeout(getUpdate,1000);
-  }
-</script>
+<% else %>
+  NO DATA
+<% end %>
+
