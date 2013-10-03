@@ -4,6 +4,14 @@
     <%= data["cordinate"].inspect %>
     <%= info_about data["cordinate"] %>
     <br/>
+    <script>
+      var myLatlng = new google.maps.LatLng(<%= data["cordinate"].inspect %>);
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title:"Hello World!"
+      });
+    </script>
   <% end %>
 <% else %>
   NO DATA

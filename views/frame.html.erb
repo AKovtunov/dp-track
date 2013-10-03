@@ -3,15 +3,28 @@
   <head>
     <title>Маршрут № <%=number%></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+      function initialize() {
+        var map_canvas = document.getElementById('google_map_canvas');
+        var map_options = {
+          center: new google.maps.LatLng(48.4308357, 35.04171),
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(map_canvas, map_options)
+      }
+
+      function getUpdate(){
+        <%= "$(\"#content\").load(\"\/route\/#{number.to_s}\");" %>
+        setTimeout(getUpdate,1000);
+      }
+      $(initialize);
+      $(getUpdate);
+    </script>
   </head>
   <body>
-
+    <div id="google_map_canvas" style="width: 500px; height: 500px;"></div>
+    <div id="content"></div>
   </body>
-  <script>
-    $(getUpdate);
-    function getUpdate(){
-      <%= "$(\"body\").load(\"\/route\/#{number.to_s}\");" %>
-      setTimeout(getUpdate,1000);
-    }
-  </script>
 </html>
