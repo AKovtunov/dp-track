@@ -5,7 +5,8 @@
     <%= info_about data["cordinate"] %>
     <br/>
     <script>
-      var myLatlng = new google.maps.LatLng(<%= data["cordinate"].inspect %>);
+      coordinates = <%= data["cordinate"] %>
+      myLatlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
       var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
