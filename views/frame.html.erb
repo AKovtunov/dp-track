@@ -4,6 +4,7 @@
     <title>Маршрут № <%=number%></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="/javascripts/StyledMarker.js"></script>
     <script>
       function initialize() {
         var map_canvas = document.getElementById('google_map_canvas');
@@ -17,14 +18,14 @@
 
       function getUpdate(){
         <%= "$(\"#content\").load(\"\/route\/#{number.to_s}\");" %>
-        setTimeout(getUpdate,12000);
+        setTimeout(getUpdate,5000);
       }
       $(initialize);
       $(getUpdate);
     </script>
   </head>
   <body>
-    <div id="google_map_canvas" style="width: 500px; height: 500px;"></div>
+    <div id="google_map_canvas" style="width: 100%; height: 500px;"></div>
     <div id="content"></div>
   </body>
 </html>

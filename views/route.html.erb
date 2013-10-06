@@ -1,20 +1,39 @@
+<script>
+  if(typeof MarkerArray !== 'undefined'){
+    for (var i = 0; i < MarkerArray.length; i++ ) {
+      if (MarkerArray[i]){
+        MarkerArray[i].setMap(null);
+      }
+    }
+  }
+    MarkerArray = []
+    console.log('clear')
+</script>
 <a href="/">Back</a>
 <% if !get_data_from(number).nil? %>
+  <% count = 0 %>
+  <table>
   <% get_data_from(number).each do |data|%>
-    <%= data["info"].inspect %>
-    <%= data["cordinate"].inspect %>
-    <%= info_about data["cordinate"] %>
-    <br/>
+    <tr><td id="hex_color_<%=count+1%>"; style="width:25px; height:25px;"></td><td><%= count += 1 %> <%= data["info"].inspect %> (<%= data["cordinate"].inspect %>)</td></tr>
     <script>
+    hex_color= '#'+Math.floor(Math.random()*16777215).toString(16)
+    $('#hex_color_<%=count%>').css('background-color', hex_color)
+    console.log('<%="Placing marker #{count}"%>')
       coordinates = <%= data["cordinate"] %>
       myLatlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
-      var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:"Hello World!"
+      MarkerArray[<%=count.to_i%>] = new StyledMarker({
+        styleIcon:new StyledIcon(StyledIconTypes.BUBBLE,{color: hex_color,text:<%="#{count}"%>}),
+        position:myLatlng,
+        map:map
       });
+      //var marker = new google.maps.Marker({
+      //  position: myLatlng,
+      //  map: map,
+      //  title:"Hello World!"
+      //});
     </script>
   <% end %>
+  </table>
 <% else %>
   NO DATA
 <% end %>

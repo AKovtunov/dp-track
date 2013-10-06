@@ -2,7 +2,7 @@
 
 require 'sinatra'
 require './helpers/ApplicationHelper'
-
+use Rack::Static, :urls => ['/assets', '/assets/js'], :root => 'public'
 # set html.erb as herb
 Tilt.register Tilt::ERBTemplate, 'html.erb'
 def herb(template, options={}, locals={})
