@@ -18,7 +18,7 @@
 
       function getUpdate(){
         <%= "$(\"#content\").load(\"\/route\/#{number.to_s}\");" %>
-        setTimeout(getUpdate,5000);
+        setTimeout(getUpdate,10000);
       }
       $(initialize);
       $(getUpdate);
