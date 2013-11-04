@@ -11,6 +11,7 @@ gem 'json'
 gem 'geocoder'
 gem 'thin'
 gem 'jquery-rails', '~> 2.1'
+gem 'newrelic_rpm'
 group :development do
   gem 'shotgun'
 end
