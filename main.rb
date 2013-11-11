@@ -10,7 +10,7 @@ def herb(template, options={}, locals={})
 end
 #do routes
 get '/' do
-  herb :index
+  herb :index, :layout => (request.xhr? ? false : :index_frame)
 end
 
 get '/route/:number', :provides => [:html, :json] do

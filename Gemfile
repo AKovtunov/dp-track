@@ -10,7 +10,9 @@ gem 'json'
 #gem 'memcachier'
 gem 'geocoder'
 gem 'thin'
+
 gem 'jquery-rails', '~> 2.1'
+
 gem 'newrelic_rpm'
 group :development do
   gem 'shotgun'

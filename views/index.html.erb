@@ -1,8 +1,20 @@
 Маршруты:
-<a href="/route/53Б">53</a>
-<a href="/route/113">113</a>
-<a href="/route/136">136</a>
-<a href="/route/150">150</a>
-<a href="/route/87Б">87</a>
-<a href="/route/120">120</a>
-<a href="/route/118">118</a>
+
+<select id="routes_select">
+  <option value="113">113 (Титова - ЦУМ)</option>
+  <option value="120">120 (Победа 6 - Центр)</option>
+  <option value="136">136 (Address)</option>
+  <option value="118">118 (Address)</option>
+  <option value="87Б">87 (Address)</option>
+</select>
+<br/>
+<input type="button" id="select_route" class="btn btn-warning" value="Найти">
+
+<script>
+  $("#routes_select").select2(
+    {
+      placeholder: "Please select route",
+      allowClear: true
+  });
+  $("#select_route").click(function() { window.location = '/route/'+$('#routes_select').val(); });
+</script>

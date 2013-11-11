@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Главная</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="/javascripts/select2.min.js"></script>
+    <link href="/css/select2.css" rel="stylesheet" type="text/css">
+    <link href="/css/select2-bootstrap.css" rel="stylesheet" type="text/css">
+    <script>
+      function initialize() {
+        var map_canvas = document.getElementById('google_map_canvas');
+        var map_options = {
+          center: new google.maps.LatLng(48.4308357, 35.04171),
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(map_canvas, map_options)
+      }
+      function getUpdate(){
+        <%= "$(\"#content\").load(\"\/\");" %>
+      }
+      $(initialize);
+      $(getUpdate);
+    </script>
+  </head>
+  <body>
+    <div id="google_map_canvas" style="width: 100%; height: 500px;"></div>
+    <div id="content"></div>
+  </body>
+</html>
